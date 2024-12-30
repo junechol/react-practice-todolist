@@ -1,31 +1,12 @@
 import "./App.css";
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer, createContext } from "react";
 import Editor from "./components/Editor";
 import List from "./components/List";
 import Header from "./components/Header";
 import { v4 as uuid } from "uuid";
 import Exam from "./components/Exam";
+import { mockData } from "./mockData";
 
-const mockData = [
-  {
-    id: 0,
-    isDone: false,
-    content: "React 공부하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 1,
-    isDone: false,
-    content: "빨래하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    isDone: false,
-    content: "노래 연습하기",
-    date: new Date().getTime(),
-  },
-];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -37,6 +18,8 @@ const reducer = (state, action) => {
     default: return state
   }
 }
+
+export const TodoContext = createContext()
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData)
@@ -68,8 +51,13 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Editor addTodo={addTodo} />
-      <List todos={todos} updateTodo={updateTodo} deleteTodo={deleteTodo} />
+      <TodoContext.Provider value={{todos, addTodo, updateTodo, deleteTodo}}>
+        <Editor/>
+        <List 
+          todos={todos} 
+          updateTodo={updateTodo} 
+          deleteTodo={deleteTodo} />
+      </TodoContext.Provider>
     </div>
   );
 }

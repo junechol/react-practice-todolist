@@ -1,8 +1,10 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext } from "react";
+import { TodoContext } from "../App";
 
-const List = ({ todos, updateTodo, deleteTodo }) => {
+const List = () => {
+  const {todos} = useContext(TodoContext)
   const [searchText, setSearchText] = useState("");
 
   const handleSearchTextChange = (e) => {
@@ -50,8 +52,6 @@ const List = ({ todos, updateTodo, deleteTodo }) => {
           <TodoItem
             todo={todo}
             key={todo.id}
-            updateTodo={updateTodo}
-            deleteTodo={deleteTodo}
           />
         ))}
       </div>
