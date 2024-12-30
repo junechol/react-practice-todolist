@@ -1,10 +1,10 @@
 import './TodoItem.css';
 import { useState, memo, useContext } from 'react';
 import EditableParagraph from './EditableParagraph';
-import { TodoContext } from '../App';
+import { TodoDispatchContext } from '../App';
 
 const TodoItem = ({ todo }) => {
-  const {updateTodo, deleteTodo} = useContext(TodoContext)
+  const {updateTodo, deleteTodo} = useContext(TodoDispatchContext)
   const [currentTodo, setCurrentTodo] = useState(todo)
 
   const updateIsDone = (e) => {
